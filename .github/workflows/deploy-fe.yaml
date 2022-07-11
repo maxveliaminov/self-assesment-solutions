@@ -1,5 +1,15 @@
 name: Deploy-fe
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      env:
+        required: true
+        default: 'test' 
+        type: choice
+        options:
+        - test
+        - staging
+        - prod 
 jobs:
   deploy:
       runs-on: ubuntu-latest
