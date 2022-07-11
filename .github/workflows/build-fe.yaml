@@ -4,8 +4,8 @@ on:
     branches: [main]
     paths-ignore:
       - '**/README.md'
-  pull_request:
-    branches: [main]
+  # pull_request:
+  #   branches: [main]
 jobs:
   build-and-test:
       runs-on: ubuntu-latest
