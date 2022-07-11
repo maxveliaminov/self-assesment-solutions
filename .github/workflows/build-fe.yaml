@@ -1,0 +1,30 @@
+name: Front-end deploy
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**/README.md'
+  # pull_request:
+  #   branches: [main]
+jobs:
+  build-and-test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        - name: Build
+          uses: subosito/flutter-action@v2
+          with:
+            flutter-version: '3.0.4'
+            channel: 'stable'
+        - run: echo hello > world
+  deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deploy
+          run: cat world
+          shell: bash
+          # env:
+          #   KEY: ${{secrets.KEY}}
+          #   PROJECT_ID: ${{secrets.PROJECT_ID}}
+          #   SERVICE_ACCOUNT: ${{secrets.SERVICE_ACCOUNT}}
