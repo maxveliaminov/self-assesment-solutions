@@ -1,15 +1,16 @@
 name: Deploy-fe
-on: push
-  # workflow_dispatch:
-  #   inputs:
-  #     env:
-  #       required: true
-  #       default: 'test' 
-  #       type: choice
-  #       options:
-  #       - test
-  #       - staging
-  #       - prod 
+on: 
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning' 
+        type: choice
+        options:
+        - info
+        - warning
+        - debug 
 jobs:
   deploy:
       runs-on: ubuntu-latest
