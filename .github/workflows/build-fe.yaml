@@ -18,6 +18,9 @@ jobs:
             flutter-version: '3.0.4'
             channel: 'stable'
         - run: echo hello > world
+        - uses: actions/upload-artifact@v3
+          with: world
+          path: world
   deploy:
       runs-on: ubuntu-latest
       steps:
