@@ -16,3 +16,4 @@ jobs:
                 echo "[commit-msg-hook] Your commit message is illegal. Please rename your branch with using following regex: $REGEX_ISSUE_ID"
                 exit 1
             fi
+
