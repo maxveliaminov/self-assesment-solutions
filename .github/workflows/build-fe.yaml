@@ -1,33 +1,19 @@
 name: Front-end deploy
 on:
-  push:
+  pull_request:
     branches: [main]
-    paths-ignore:
-      - '**/README.md'
-  # pull_request:
-  #   branches: [main]
 jobs:
   build-and-test:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
           uses: actions/checkout@v3
-        - name: Build
-          uses: subosito/flutter-action@v2
-          with:
-            flutter-version: '3.0.4'
-            channel: 'stable'
-        - run: echo hello > world
-        - uses: actions/upload-artifact@v3
-          with: world
-          path: world
-  deploy:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Deploy
-          run: cat world
-          shell: bash
-          # env:
-          #   KEY: ${{secrets.KEY}}
-          #   PROJECT_ID: ${{secrets.PROJECT_ID}}
-          #   SERVICE_ACCOUNT: ${{secrets.SERVICE_ACCOUNT}}
+        - run: |
+            REGEX_ISSUE_ID="^(DRDC-[0-9]+|Merge|hotfix)" #<type>[optional scope]: <description>
+            BRANCH_NAME=$(git symbolic-ref --short HEAD)
+            ISSUE_ID=$(echo "$BRANCH_NAME" | grep -o -E "$REGEX_ISSUE_ID")
+            if [[ -z "$ISSUE_ID" ]]; then
+                echo "[commit-msg-hook] Your commit message is illegal. Please rename your branch with using following regex: $REGEX_ISSUE_ID"
+                exit 1
+            fi
+
